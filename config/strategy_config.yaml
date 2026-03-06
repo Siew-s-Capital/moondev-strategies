@@ -1,0 +1,33 @@
+data:
+  hourly_csv: data/sample_hourly.csv
+
+regime_detector:
+  n_components: 7
+  random_state: 42
+  n_iter: 200
+
+breakout_strategy:
+  tp_pct: 0.03
+  sl_pct: 0.18
+  leverage: 3.0
+  resistance_lookback_days: 20
+
+liquidation_reversal:
+  z_threshold: 2.0
+  liquidation_pressure_threshold: 1.5
+  hard_stop_bps: 35.0
+  time_stop_minutes: 12
+
+risk_management:
+  max_risk_per_trade: 0.02
+  daily_kill_switch: -0.03
+  fractional_kelly: 0.5
+  correlation_cap: 0.8
+
+backtest:
+  fee_bps: 4.0
+  slippage_bps: 3.0
+  annualization: 8760
+
+pipeline:
+  mode: backtest  # backtest | paper | live

@@ -1,0 +1,6 @@
+numpy>=1.26
+pandas>=2.2
+hmmlearn>=0.3.2
+scikit-learn>=1.4
+PyYAML>=6.0
+pytest>=8.0
