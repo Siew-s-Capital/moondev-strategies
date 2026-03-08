@@ -5,3 +5,7 @@ __pycache__/
 .pytest_cache/
 data/*
 !data/.gitkeep
+!data/processed/
+!data/processed/**
+!data/checkpoints/
+!data/checkpoints/**

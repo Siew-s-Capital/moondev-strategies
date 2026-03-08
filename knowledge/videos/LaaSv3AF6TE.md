@@ -1,0 +1,14 @@
+# OpenClaw: Why Your Career Has an Expiration Date Now
+
+- Video ID: `LaaSv3AF6TE`
+- Date: None
+- URL: https://www.youtube.com/watch?v=LaaSv3AF6TE
+- Transcript: available (LaaSv3AF6TE.automatic_captions.en.json3)
+- Confidence: medium
+
+## Strategy Summary
+Explicit risk controls (stops, sizing, drawdown awareness); Automation/AI tooling for strategy execution; Trend or momentum confirmation before entries
+
+## Notes
+- Summary uses available metadata and caption text when available.
+- Missing transcript/captions => lower confidence and title/description-only inference.

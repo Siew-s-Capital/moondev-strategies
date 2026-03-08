@@ -1,73 +1,39 @@
-# MoonDev Strategies
+# Moon Dev Strategies Knowledge Base
 
-Regime-aware crypto strategy stack inspired by MoonDev research videos.
+Knowledge base built from Moon Dev main channel (UCN7D80fY9xMYu5mHhUhXEFw).
 
-## Included Components
+## Outputs
 
-- **HMM Regime Detector** (`src/regime_detector.py`)
-  - Features: returns, volatility, volume_change, Bollinger Band width
-  - Model: `GaussianHMM(n_components=7)`
-  - Labels states into `trend_up`, `trend_down`, `range`, `shock`
+- `data/processed/video_index.json` / `.jsonl` / `.csv` — machine-readable full video index (id, title, date, url)
+- `data/processed/video_summaries.jsonl` — per-video strategy summaries with confidence and transcript status
+- `knowledge/videos/*.md` — human-readable summary pages per video
+- `knowledge/reports/aggregate_playbook.md` — recurring tactics and risk rules
+- `data/checkpoints/summary_progress.json` — incremental progress checkpoint
 
-- **Breakout Strategy** (`src/strategies/breakout.py`)
-  - Entry: 1H close > prior daily 20D rolling resistance
-  - Uses `.shift(1)` to avoid look-ahead bias
-  - TP: +3%, SL: -18%, leverage: 3x
-
-- **Liquidation Reversal** (`src/strategies/liquidation_reversal.py`)
-  - Long: z-score < -2 + high liquidation pressure + smart money confirmation
-  - Short: z-score > 2 + high liquidation pressure
-  - Hard stop: 35 bps, time stop: 12 minutes
-
-- **Risk Manager** (`src/risk_manager.py`)
-  - Position risk cap: 2% per trade
-  - Daily kill-switch: stop at -3%
-  - Fractional Kelly sizing
-  - Correlation cap checks
-
-- **Backtest Framework** (`src/backtest.py`)
-  - Walk-forward split utility
-  - Fee + slippage cost model
-  - Metrics: Sharpe, Sortino, max drawdown, exposure
-
-- **Main Orchestrator** (`src/main.py`)
-  - Config-driven YAML pipeline
-  - Regime detect -> strategy signals -> backtest
-  - Supports backtest/paper/live mode config flags (backtest implemented in this baseline)
-
-## Project Structure
-
-```
-moondev-strategies/
-├── src/
-├── config/
-├── data/
-├── tests/
-├── requirements.txt
-└── README.md
-```
-
-## Setup
+## Usage
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+python3 scripts/fetch_index.py
+python3 scripts/build_summaries.py          # resume-safe incremental run
+python3 scripts/build_playbook.py
 ```
 
-## Run
+Optional partial run for long jobs:
 
 ```bash
-python src/main.py --config config/strategy_config.yaml
+python3 scripts/build_summaries.py --limit 100
 ```
 
-## Test
+## Progress Stats
 
-```bash
-pytest -q
-```
+- Indexed videos: **234** (processed into summaries so far)
+- Transcript coverage: **233/234** available, **1** missing
+- Status: incremental pipeline enabled; rerun `build_summaries.py` to continue from checkpoint.
 
-## Notes
+## Confidence Policy
 
-- `data/` is gitignored except for `.gitkeep`; sample CSV is provided for local runs.
-- No API keys are embedded. Plug live feeds through adapters before deploying.
+- `high`: transcript+metadata with clear tactical detail
+- `medium`: transcript exists but heuristic extraction
+- `low`: transcript unavailable or fetch failure; title/description-only inference
+
+No transcript content is fabricated. Missing transcript is explicitly marked per video.
